@@ -1,6 +1,7 @@
 import express from "express"
 import { body } from "express-validator";
-import { RegisterCaptain } from "../controllers/captain.controller.js";
+import { GetCaptainProfile, LoginCaptain, LogoutCaptain, RegisterCaptain } from "../controllers/captain.controller.js";
+import { AuthCaptain } from "../middlewares/auth.middlewares.js";
 
 
 export const CaptainRouter = express.Router();
@@ -16,3 +17,8 @@ CaptainRouter.post("/register", [
     body("Vehicle.VehicleType").isIn(["car", "motorcycle", "auto"]).withMessage("Invalid Vehicle Type")
 ], RegisterCaptain)
 
+
+CaptainRouter.post("/login", LoginCaptain)
+CaptainRouter.get("/profile", AuthCaptain,  GetCaptainProfile)
+
+CaptainRouter.get("/logout", AuthCaptain, LogoutCaptain )

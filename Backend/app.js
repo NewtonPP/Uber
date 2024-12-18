@@ -13,7 +13,7 @@ ConnectToDb()
 
 app.use(express.json())
 app.use(cookieParser())
-
+app.use(cors())
 
 app.use("/users",UserRouter)
 app.use("/captain",CaptainRouter)

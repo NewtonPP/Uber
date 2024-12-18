@@ -22,4 +22,4 @@ UserRouter.post("/login", [
 
 
 UserRouter.get("/profile", AuthUser, GetUserProfile)
-UserRouter.get("/logout",LogoutUser )
+UserRouter.get("/logout",AuthUser,LogoutUser )
