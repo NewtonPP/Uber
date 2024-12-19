@@ -45,7 +45,6 @@ export const AuthCaptain = async (req,res, next) =>{
     try {
         const Decoded = jwt.decode(Token, process.env.JWT_Secret)
         const Captain = await captainModel.findById(Decoded._id)
-
         req.Captain = Captain
 
         return next();

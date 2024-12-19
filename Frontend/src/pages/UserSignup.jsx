@@ -30,7 +30,7 @@ const HandleSubmit = (e)=>{
 
         setUser(data.user)
         localStorage.setItem("token", data.Token)
-        navigate("/home")
+        navigate("/userhome")
       }
     }
   )

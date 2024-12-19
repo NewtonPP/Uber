@@ -23,7 +23,7 @@ const HandleSubmit = (e)=>{
           const data = response.data;
           setUser(data.user)
           localStorage.setItem("token", data.Token)
-          navigate("/home")
+          navigate("/userhome")
         }
     })
     .catch((error)=>console.log(error))
