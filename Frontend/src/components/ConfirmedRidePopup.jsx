@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const ConfirmedRidePopup = ({setConfirmedRidePopUpPanel, setRidePopUpPanel, Customer}) => {
+    const navigate = useNavigate();
   return (
     <div>
     <h3 className='text-xl font-semibold py-2 mt-4'>Confirm this ride to start</h3>
@@ -38,9 +40,11 @@ const ConfirmedRidePopup = ({setConfirmedRidePopUpPanel, setRidePopUpPanel, Cust
         </div>
         </div>
     </div>
-    <Link className="w-full" to={"/captain/route"}>
-    <button className='mt-5 w-full bg-black text-white font-semiboldr rounded-lg p-2' >Confirm</button>
-    </Link>
+    
+    <button 
+    onClick={()=>{navigate("/captain/route",{state:{ride:Customer}})}}
+    className='mt-5 w-full bg-black text-white font-semiboldr rounded-lg p-2' >Confirm</button>
+ 
     <button className=' mt-5 w-full bg-black text-white font-semiboldr rounded-lg p-2' onClick={()=>{setRidePopUpPanel(false )
         setConfirmedRidePopUpPanel(false)
     }}>Cancel</button>

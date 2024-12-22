@@ -9,6 +9,7 @@ import { SocketDataContext } from '../context/SocketContext'
 import { CaptainDataContext } from '../context/CaptainContext'
 import { useContext, useEffect } from 'react'
 import axios from "axios"
+import LiveTracking from '../components/LiveTracking'
 const CaptainHome = () => {
 
   const [RidePopUpPanel, setRidePopUpPanel] = useState(false)
@@ -88,7 +89,7 @@ const CaptainHome = () => {
       </div>
 
       <div className=' h-[60%] w-screen'>
-        <img className="h-full object-cover object-fit"src='https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg'></img>
+       <LiveTracking/>
       </div>
       <div className='h-2/5 p-6'><CaptainDetails/></div>
   

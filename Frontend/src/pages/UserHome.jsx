@@ -10,6 +10,7 @@ import WaitForDriver from '../components/WaitForDriver';
 import LookingForDriver from '../components/LookingForDriver';
 import { SocketDataContext } from '../context/SocketContext';
 import { UserDataContext } from '../context/UserContext';
+import LiveTracking from '../components/LiveTracking';
 
 const UserHome = () => {
   const [PickupLocation, setPickupLocation] = useState('');
@@ -197,8 +198,8 @@ const CreateRide = (VehicleType)=>{
     <div className='h-screen overflow-hidden relative '>
       <img className='w-16 absolute left-5 top-5' src='https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png'></img>
 
-      <div className=' h-screen w-screen'>
-        <img className="h-full object-cover object-fit"src='https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg'></img>
+      <div className=' h-screen w-screen '>
+       <LiveTracking/>
       </div>
 
       <div className=' h-screen absolute bottom-0 w-full flex flex-col justify-end'>

@@ -5,10 +5,12 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { CaptainDataContext } from '../context/CaptainContext'
 import axios from "axios"
+import { useLocation } from 'react-router-dom'
 
 const CaptainRiding = () => {
   const {Captain} = useContext(CaptainDataContext)
-
+  const location =useLocation()
+  const rideData = location.state?.ride
 
     const [FinishRidePanel, setFinishRidePanel] = useState(false)
     const FinishRidePanelRef = useRef(null)
@@ -50,7 +52,9 @@ const CaptainRiding = () => {
       </div>
 
       <div ref={FinishRidePanelRef} className='fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-4 flex flex-col gap-2 pt-12'>
-        <FinishRide setFinishRidePanel = {setFinishRidePanel} />
+        <FinishRide 
+        rideData = {rideData}
+        setFinishRidePanel = {setFinishRidePanel} />
       </div>
 
     </div>
