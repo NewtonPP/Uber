@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import axios from "axios"
 import {useGSAP} from "@gsap/react"
 import gsap from 'gsap';
@@ -8,6 +8,8 @@ import VehiclePanel from '../components/VehiclePanel';
 import ConfirmedRide from '../components/ConfirmedRide';
 import WaitForDriver from '../components/WaitForDriver';
 import LookingForDriver from '../components/LookingForDriver';
+import { SocketDataContext } from '../context/SocketContext';
+import { UserDataContext } from '../context/UserContext';
 
 const UserHome = () => {
   const [PickupLocation, setPickupLocation] = useState('');
@@ -30,7 +32,22 @@ const UserHome = () => {
   const [isPickupActive, setIsPickupActive] = useState(null)
   
   const [Fare, setFare] = useState({})
+  const [Ride, setRide] = useState(null)
 
+
+  const {SendMessage, Receive, socket} = useContext(SocketDataContext)
+  const {User} = useContext(UserDataContext)
+  useEffect(()=>{
+    SendMessage("join",  {userType:"user", userId:User._id})
+  },[User])
+  
+  socket.on("RideConfirmed", ride =>{
+    setVehicleFound(false)
+    setConfirmedRidePanel(false)
+    setWaitingForDriver(true)
+    setRide(ride)
+  })
+  
   const HandlePickupChange = (pickup) =>{
     if(pickup === ""){
       setPickupSuggestions([])
@@ -259,7 +276,7 @@ const CreateRide = (VehicleType)=>{
       </div>
 
       <div ref={WaitingForDriverRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12 flex flex-col gap-2'>
-        <WaitForDriver />
+        <WaitForDriver Ride = {Ride} RideData= {RideData}/>
       </div>
 
         

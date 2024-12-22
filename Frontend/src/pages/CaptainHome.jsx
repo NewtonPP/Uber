@@ -5,13 +5,52 @@ import RidePopUp from '../components/RidePopUp'
 import {useGSAP} from "@gsap/react"
 import gsap from 'gsap';
 import ConfirmedRidePopup from '../components/ConfirmedRidePopup'
-
+import { SocketDataContext } from '../context/SocketContext'
+import { CaptainDataContext } from '../context/CaptainContext'
+import { useContext, useEffect } from 'react'
+import axios from "axios"
 const CaptainHome = () => {
 
-  const [RidePopUpPanel, setRidePopUpPanel] = useState(true)
+  const [RidePopUpPanel, setRidePopUpPanel] = useState(false)
   const [ConfirmedRidePopUpPanel,setConfirmedRidePopUpPanel ] = useState(false)
   const RidePopUpPanelRef = useRef(null)
   const ConfirmedRidePopUpPanelRef = useRef(null)
+
+ const {SendMessage, Receive, socket} = useContext(SocketDataContext)
+  const {Captain} = useContext(CaptainDataContext)
+  useEffect(()=>{
+    SendMessage("join",  {userType:"captain", userId:Captain._id})
+
+    const updateLocation = () =>{
+      if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(position =>{
+          socket.emit("UpdateLocationCaptain",{
+            userId: Captain._id,
+            ltd:position.coords.latitude,
+            lng:position.coords.longitude
+          })
+        })
+      }
+    }
+
+    const locationInterval = setInterval (updateLocation, 10000)
+
+    return () => clearInterval (locationInterval)
+  })
+  
+  const [Customer,setCustomer] = useState();
+  socket.on("NewRide",(data)=>{
+    setCustomer(data)
+    setRidePopUpPanel(true)
+  })
+
+  const ConfirmRide = async () =>{
+   const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`,{
+    rideId : Customer._id,
+    captainId: Captain._id
+   },{headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}})
+
+  }
 
   useGSAP(function(){
     if(RidePopUpPanel){
@@ -26,6 +65,7 @@ const CaptainHome = () => {
   }
   },[RidePopUpPanel])
 
+ 
   useGSAP(function(){
     if(ConfirmedRidePopUpPanel){
     gsap.to(ConfirmedRidePopUpPanelRef.current,{
@@ -51,13 +91,15 @@ const CaptainHome = () => {
         <img className="h-full object-cover object-fit"src='https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg'></img>
       </div>
       <div className='h-2/5 p-6'><CaptainDetails/></div>
-
+  
     <div ref={RidePopUpPanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-4 flex flex-col gap-2 pt-12'>
-        <RidePopUp setRidePopUpPanel = {setRidePopUpPanel} setConfirmedRidePopUpPanel = {setConfirmedRidePopUpPanel}/>
+        <RidePopUp 
+        ConfirmRide = {ConfirmRide}
+        Customer = {Customer} setRidePopUpPanel = {setRidePopUpPanel} setConfirmedRidePopUpPanel = {setConfirmedRidePopUpPanel}/>
       </div>
 
       <div ref={ConfirmedRidePopUpPanelRef} className='fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-4 flex flex-col gap-2 pt-12'>
-        <ConfirmedRidePopup setConfirmedRidePopUpPanel = {setConfirmedRidePopUpPanel} setRidePopUpPanel = {setRidePopUpPanel}/>
+        <ConfirmedRidePopup Customer = {Customer} setConfirmedRidePopUpPanel = {setConfirmedRidePopUpPanel} setRidePopUpPanel = {setRidePopUpPanel}/>
       </div>
 </div>
   )

@@ -1,9 +1,14 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import FinishRide from '../components/FinishRide'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { CaptainDataContext } from '../context/CaptainContext'
+import axios from "axios"
+
 const CaptainRiding = () => {
+  const {Captain} = useContext(CaptainDataContext)
+
 
     const [FinishRidePanel, setFinishRidePanel] = useState(false)
     const FinishRidePanelRef = useRef(null)

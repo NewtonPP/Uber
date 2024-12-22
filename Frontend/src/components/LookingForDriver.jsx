@@ -1,5 +1,5 @@
 import React from 'react'
-
+import axios from "axios"
 const LookingForDriver = ({RideData, setVehicleFound, setConfirmedRidePanel, setWaitingForDriver}) => {
     return (
         <div>
@@ -40,7 +40,8 @@ const LookingForDriver = ({RideData, setVehicleFound, setConfirmedRidePanel, set
         </div>
         </div>
     </div>
-    <button className=' mt-5 w-full bg-black text-white font-semiboldr rounded-lg p-2' onClick={()=>{setWaitingForDriver(true)
+    <button className=' mt-5 w-full bg-black text-white font-semiboldr rounded-lg p-2' onClick={()=>{
+        setWaitingForDriver(true)
         setVehicleFound(false)
         setConfirmedRidePanel(false)
     }}>Confirm</button>

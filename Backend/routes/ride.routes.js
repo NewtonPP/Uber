@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body, query } from "express-validator";
-import { CreateUserRide, GetRideFare } from "../controllers/ride.controller.js";
-import { AuthUser } from "../middlewares/auth.middlewares.js";
+import { ConfirmRide, CreateUserRide, GetRideFare } from "../controllers/ride.controller.js";
+import { AuthCaptain, AuthUser } from "../middlewares/auth.middlewares.js";
 
 export const RideRouter = Router()
 
@@ -18,3 +18,5 @@ RideRouter.get("/getfare", AuthUser,
     query("pickup").isString().isLength({min:3}).withMessage("Invalid Pickup"),
     query("destination").isString().isLength({min:3}).withMessage("Invalid destination"),
      GetRideFare)
+
+RideRouter.post("/confirm",AuthCaptain, body("rideId").isMongoId().withMessage("Invalid ride id"), ConfirmRide)
