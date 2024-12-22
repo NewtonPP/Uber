@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LookingForDriver = ({setVehicleFound, setConfirmedRidePanel, setWaitingForDriver}) => {
+const LookingForDriver = ({RideData, setVehicleFound, setConfirmedRidePanel, setWaitingForDriver}) => {
     return (
         <div>
              <h5 
@@ -17,22 +17,26 @@ const LookingForDriver = ({setVehicleFound, setConfirmedRidePanel, setWaitingFor
         <div className='flex items-center gap-5 border-b-2 py-2 '>
             <i className='text-lg ri-map-pin-user-fill'></i>
             <div>
-                <h3 className='text-lg font-medium'>562/11-A</h3>
-                <p className='text-sm text-gray-600'>21 Ace Ave, Starkville</p>
+                <p className='text-sm text-gray-600'>{RideData.pickup}</p>
             </div>
         </div>
         <div className='flex items-center gap-5 border-b-2 py-2'>
         <i className='text-lg ri-map-pin-2-fill'></i>
             <div>
-                <h3 className='text-lg font-medium'>562/11-A</h3>
-                <p className='text-sm text-gray-600'>21 Ace Ave, Starkville</p>
+                <p className='text-sm text-gray-600'>{RideData.destination}</p>
             </div>
         </div>
         <div className='flex items-center gap-5 py-2'>
         <i className='text-lg ri-currency-line'></i>
         <div>
-            <h3 className='text-lg font-medium'>$12</h3>
+            <h3 className='text-lg font-medium'>${RideData.fare}</h3>
             <p className='text-sm text-gray-600'>Cash</p>
+        </div>
+        </div>
+
+        <div className='flex items-center gap-5 py-2 w-full justify-center bg-blue-500 text-white rounded-md'>
+        <div>
+            <h3 className='text-base font-medium'>{RideData.status}...</h3>
         </div>
         </div>
     </div>

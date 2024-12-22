@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ConfirmedRide = ({setConfirmedRidePanel, setVehicleFound}) => {
+const ConfirmedRide = ({CreateRide, setConfirmedRidePanel, setVehicleFound, Pickup, Destination, Fare}) => {
   return (
     <div>
          <h5 
@@ -15,26 +15,29 @@ const ConfirmedRide = ({setConfirmedRidePanel, setVehicleFound}) => {
     <div className='flex items-center gap-5 border-b-2 py-2 '>
         <i className='text-lg ri-map-pin-user-fill'></i>
         <div>
-            <h3 className='text-lg font-medium'>562/11-A</h3>
-            <p className='text-sm text-gray-600'>21 Ace Ave, Starkville</p>
+            
+            <p className='text-sm text-gray-600'>{Pickup}</p>
         </div>
     </div>
     <div className='flex items-center gap-5 border-b-2 py-2'>
     <i className='text-lg ri-map-pin-2-fill'></i>
         <div>
-            <h3 className='text-lg font-medium'>562/11-A</h3>
-            <p className='text-sm text-gray-600'>21 Ace Ave, Starkville</p>
+            
+            <p className='text-sm text-gray-600'>{Destination}</p>
         </div>
     </div>
     <div className='flex items-center gap-5 py-2'>
     <i className='text-lg ri-currency-line'></i>
     <div>
-        <h3 className='text-lg font-medium'>$12</h3>
+        <h3 className='text-lg font-medium'>${Fare.car}</h3>
         <p className='text-sm text-gray-600'>Cash</p>
     </div>
     </div>
 </div>
-<button className=' mt-5 w-full bg-black text-white font-semiboldr rounded-lg p-2' onClick={()=>setVehicleFound(true)}>Confirm</button>
+<button className=' mt-5 w-full bg-black text-white font-semiboldr rounded-lg p-2' onClick={()=>{
+    setVehicleFound(true)
+    CreateRide("car")
+    }}>Confirm</button>
 </div>
 </div>
     

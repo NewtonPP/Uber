@@ -5,6 +5,8 @@ import { ConnectToDb } from "./Database/db.js";
 import { UserRouter } from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
 import { CaptainRouter } from "./routes/captain.routes.js";
+import { MapRouter } from "./routes/maps.routes.js";
+import { RideRouter } from "./routes/ride.routes.js";
 
 dotenv.config();
 
@@ -17,7 +19,5 @@ app.use(cors())
 
 app.use("/users",UserRouter)
 app.use("/captain",CaptainRouter)
-
-app.get("/", (req,res)=>{
-    res.send("Hello")
-})
+app.use("/maps", MapRouter)
+app.use("/rides", RideRouter)
